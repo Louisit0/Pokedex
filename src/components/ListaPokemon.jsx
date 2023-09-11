@@ -4,12 +4,13 @@ import ColoresTipo from "../utilities/ColoresTipo";
 const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonTypes, setPokemonTypes] = useState({});
+  const [limitRender, setLimitRender] = useState(50);
 
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
         const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?offset=0&limit=30"
+          `https://pokeapi.co/api/v2/pokemon?offset=0&limit=${limitRender}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -38,7 +39,7 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
     };
 
     fetchPokemonData();
-  }, []);
+  }, [limitRender]);
 
   const mostrarDetalles = (pokemon, index) => {
     setPokemonInfo({
@@ -50,6 +51,11 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
       }.gif`,
     });
     console.log("pokemonInfo: ", pokemon);
+  };
+
+  const cargarMas = () => {
+    setLimitRender((prevLimit) => prevLimit + 50);
+    console.log("Cargando más: ", limitRender);
   };
 
   return (
@@ -88,6 +94,13 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
           </a>
         ))}
       </div>
+      {/* Futuro: que cargue a medida que scrolleas */}
+      <button
+        onClick={cargarMas}
+        className="py-2 px-8 bg-black text-white my-10 mx-auto w-full"
+      >
+        Cargar más
+      </button>
     </div>
   );
 };

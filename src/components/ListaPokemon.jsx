@@ -25,11 +25,19 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
           if (response.ok) {
             const pokemonDetails = await response.json();
             console.log(pokemonDetails);
+            // Almacena los detalles del Pokémon en una variable local
+            const pokemonDetail = {
+              name: pokemonDetails.name,
+              types: pokemonDetails.types.map((type) => type.type.name),
+              height: pokemonDetails.height,
+              weight: pokemonDetails.weight,
+              stats: pokemonDetails.stats,
+              abilities: pokemonDetails.abilities,
+            };
+            // console.log(pokemonDetail);
             setPokemonTypes((prevTypes) => ({
               ...prevTypes,
-              [pokemon.name]: pokemonDetails.types.map(
-                (type) => type.type.name
-              ),
+              [pokemon.name]: pokemonDetail,
             }));
           }
         });
@@ -42,13 +50,19 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
   }, [limitRender]);
 
   const mostrarDetalles = (pokemon, index) => {
+    // Usa los detalles del Pokémon almacenados en pokemonTypes
+    const pokemonDetail = pokemonTypes[pokemon.name] || {};
     setPokemonInfo({
       id: index + 1,
-      name: pokemon.name,
-      types: pokemonTypes[pokemon.name] || [],
+      name: pokemonDetail.name,
+      types: pokemonDetail.types || [],
       img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
         index + 1
       }.gif`,
+      height: pokemonDetail.height || 0,
+      weight: pokemonDetail.weight || 0,
+      stats: pokemonDetail.stats,
+      abilities: pokemonDetail.abilities,
     });
     console.log("pokemonInfo: ", pokemon);
   };
@@ -79,7 +93,7 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
               <h3 className="font-bold mb-2">{pokemon.name}</h3>
               <div className="flex flex-row justify-evenly">
                 {pokemonTypes[pokemon.name] &&
-                  pokemonTypes[pokemon.name].map((type, typeIndex) => (
+                  pokemonTypes[pokemon.name].types.map((type, typeIndex) => (
                     <span
                       key={typeIndex}
                       className={`px-4 py-1 self-center rounded-lg font-bold capitalize text-sm ${

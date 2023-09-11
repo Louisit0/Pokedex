@@ -2,6 +2,15 @@ import React from "react";
 import ColoresTipo from "../utilities/ColoresTipo";
 
 const PokeInfo = ({ pokemonInfo }) => {
+  const statAbbreviations = {
+    hp: "HP",
+    attack: "ATK",
+    defense: "DEF",
+    "special-attack": "SpA",
+    "special-defense": "SpD",
+    speed: "SPD",
+  };
+
   console.log(pokemonInfo);
   return (
     <div
@@ -34,6 +43,48 @@ const PokeInfo = ({ pokemonInfo }) => {
                   {type}
                 </span>
               ))}
+            </div>
+            <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
+              <h4 className="font-bold">Height</h4>
+              <h4 className="font-bold">Weight</h4>
+              <p className="p-2 rounded-2xl bg-gray-100">
+                {pokemonInfo.height}m
+              </p>
+              <p className="p-2 rounded-2xl bg-gray-100">
+                {pokemonInfo.weight}kg
+              </p>
+            </div>
+            <div className="mt-4">
+              <h4 className="font-bold">Abilities</h4>
+              <ul className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
+                {pokemonInfo.abilities.map((abilitie, index) => (
+                  <li
+                    className="p-2 rounded-2xl bg-gray-100 capitalize"
+                    key={index}
+                  >
+                    {abilitie.ability.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-4">
+              <h4 className="font-bold">Stats</h4>
+              <ul className="flex flex-row justify-evenly">
+                {pokemonInfo.stats.map((stat, statIndex) => (
+                  <div key={statIndex} className="bg-gray-100 rounded-2xl p-1">
+                    <li
+                      className="p-2 bg-blue-400 rounded-full text-white font-bold"
+                      style={{ fontSize: 12 }}
+                      key={statIndex}
+                    >
+                      {statAbbreviations[stat.stat.name]}
+                    </li>
+                    <li className="font-bold text-sm mt-1" key={statIndex}>
+                      {stat.base_stat}
+                    </li>
+                  </div>
+                ))}
+              </ul>
             </div>
           </>
         ) : (

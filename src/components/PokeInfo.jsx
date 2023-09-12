@@ -1,4 +1,3 @@
-import React from "react";
 import ColoresTipo from "../utilities/ColoresTipo";
 
 const PokeInfo = ({ pokemonInfo }) => {
@@ -11,10 +10,19 @@ const PokeInfo = ({ pokemonInfo }) => {
     speed: "SPD",
   };
 
+  const colorStats = {
+    hp: "bg-green-400",
+    attack: "bg-red-400",
+    defense: "bg-orange-400",
+    "special-attack": "bg-yellow-400",
+    "special-defense": "bg-purple-400",
+    speed: "bg-blue-400",
+  };
+
   console.log(pokemonInfo);
   return (
     <div
-      className="bg-white rounded-xl shadow-sm bottom-0 fixed w-96 flex justify-center items-start"
+      className="hidden bg-white rounded-xl shadow-sm md:bottom-0 md:right-36 md:fixed w-96 md:flex justify-center items-start"
       style={{ height: "86vh" }}
     >
       <div className="w-full text-center">
@@ -25,7 +33,7 @@ const PokeInfo = ({ pokemonInfo }) => {
             <img
               src={pokemonInfo.img}
               alt={pokemonInfo.name}
-              className="mx-auto object-contain h-64"
+              className="mx-auto object-contain h-40"
               style={{ imageRendering: "pixelated" }}
             />
             <p className="text-gray-400 font-bold">N° {pokemonInfo.id}</p>
@@ -44,6 +52,11 @@ const PokeInfo = ({ pokemonInfo }) => {
                 </span>
               ))}
             </div>
+            <div className="my-4 text-gray-400">
+              <h4 className="font-bold text-black">Pokedéx entry</h4>
+              <p>{pokemonInfo.species.flavorText}</p>
+            </div>
+
             <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
               <h4 className="font-bold">Height</h4>
               <h4 className="font-bold">Weight</h4>
@@ -73,15 +86,14 @@ const PokeInfo = ({ pokemonInfo }) => {
                 {pokemonInfo.stats.map((stat, statIndex) => (
                   <div key={statIndex} className="bg-gray-100 rounded-2xl p-1">
                     <li
-                      className="p-2 bg-blue-400 rounded-full text-white font-bold"
+                      className={`p-2 ${
+                        colorStats[stat.stat.name]
+                      } rounded-full text-white font-bold`}
                       style={{ fontSize: 12 }}
-                      key={statIndex}
                     >
                       {statAbbreviations[stat.stat.name]}
                     </li>
-                    <li className="font-bold text-sm mt-1" key={statIndex}>
-                      {stat.base_stat}
-                    </li>
+                    <li className="font-bold text-sm mt-1">{stat.base_stat}</li>
                   </div>
                 ))}
               </ul>

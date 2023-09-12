@@ -8,7 +8,7 @@ function App() {
   const [pokemonInfo, setPokemonInfo] = useState({});
 
   return (
-    <div className="h-screen w-full bg-slate-50 flex flex-col px-40">
+    <div className="h-screen w-full bg-slate-100 flex flex-col px-5 md:px-40">
       <div className="flex flex-row gap-4 mt-8">
         <div className="w-full">
           <Buscador />
@@ -18,9 +18,6 @@ function App() {
               setPokemonInfo={setPokemonInfo}
             />
           </div>
-        </div>
-        <div className="w-1/2">
-          <PokeInfo pokemonInfo={pokemonInfo} />
         </div>
       </div>
     </div>

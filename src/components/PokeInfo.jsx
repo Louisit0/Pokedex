@@ -1,6 +1,6 @@
 import ColoresTipo from "../utilities/ColoresTipo";
 
-const PokeInfo = ({ pokemonInfo }) => {
+const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
   const statAbbreviations = {
     hp: "HP",
     attack: "ATK",
@@ -19,23 +19,56 @@ const PokeInfo = ({ pokemonInfo }) => {
     speed: "bg-blue-400",
   };
 
+  const closeInfo = () => {
+    setInfoIsClicked(false);
+    console.log("cerrando");
+  };
+
   console.log(pokemonInfo);
   return (
+    // <div
+    //   className="hidden bg-white rounded-xl shadow-sm md:bottom-0 md:right-36 md:fixed w-96 md:flex justify-center items-start"
+    //   style={{ height: "86vh" }}
+    // >
     <div
-      className="hidden bg-white rounded-xl shadow-sm md:bottom-0 md:right-36 md:fixed w-96 md:flex justify-center items-start"
-      style={{ height: "86vh" }}
+      className={`${
+        infoIsClicked
+          ? "fixed bg-slate-50 bottom-0 right-0 left-0 h-full px-4"
+          : "hidden"
+      }`}
     >
       <div className="w-full text-center">
         {pokemonInfo && pokemonInfo.name ? (
           <>
             {/* Tener 3 tamaños distintos:
           114 px height default, 153 px height 2da, 267 px height 3ra */}
-            <img
-              src={pokemonInfo.img}
-              alt={pokemonInfo.name}
-              className="mx-auto object-contain h-40"
-              style={{ imageRendering: "pixelated" }}
-            />
+            <div className="flex flex-row">
+              <img
+                src={pokemonInfo.img}
+                alt={pokemonInfo.name}
+                className="mx-auto object-contain h-40"
+                style={{ imageRendering: "pixelated" }}
+              />
+              <button
+                className="absolute right-0 p-3 m-3 rounded-full bg-slate-100"
+                onClick={closeInfo}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
             <p className="text-gray-400 font-bold">N° {pokemonInfo.id}</p>
             <h3 className="text-2xl font-bold capitalize mb-2">
               {pokemonInfo.name}

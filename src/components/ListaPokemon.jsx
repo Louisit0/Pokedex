@@ -6,6 +6,7 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonTypes, setPokemonTypes] = useState({});
   const [limitRender, setLimitRender] = useState(50);
+  const [infoIsClicked, setInfoIsClicked] = useState(false);
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -75,6 +76,9 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
   }, [limitRender]);
 
   const mostrarDetalles = (pokemon, index) => {
+    setInfoIsClicked(true);
+    console.log("isClicked??: " + infoIsClicked);
+
     // Usa los detalles del Pokémon almacenados en pokemonTypes
     const pokemonDetail = pokemonTypes[pokemon.name] || {};
     setPokemonInfo({
@@ -99,16 +103,21 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
   };
 
   return (
-    <div className="h-screen flex flex-row w-full gap-5">
+    <div className="h-screen flex flex-row w-full gap-4">
+      <PokeInfo
+        pokemonInfo={pokemonInfo}
+        infoIsClicked={infoIsClicked}
+        setInfoIsClicked={setInfoIsClicked}
+      />
       <div className="w-full md:w-2/3">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 bg-slate-100">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-slate-100">
           {pokemonData.map((pokemon, index) => (
             <a
               key={index}
               className="cursor-pointer"
               onClick={() => mostrarDetalles(pokemon, index)}
             >
-              <div className="bg-white p-4 rounded-xl text-center">
+              <div className="bg-white p-4 rounded-xl text-center capitalize">
                 <img
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
                     index + 1
@@ -123,7 +132,7 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
                     pokemonTypes[pokemon.name].types.map((type, typeIndex) => (
                       <span
                         key={typeIndex}
-                        className={`px-4 py-1 self-center rounded-lg font-bold capitalize text-sm ${
+                        className={`px-4 py-1 self-center rounded-lg font-bold text-sm ${
                           ColoresTipo[type] || "bg-gray-500"
                         }`}
                       >
@@ -145,8 +154,6 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
         </div>
       </div>
       {/* Futuro: que cargue a medida que scrolleas */}
-
-      <PokeInfo pokemonInfo={pokemonInfo} />
     </div>
   );
 };

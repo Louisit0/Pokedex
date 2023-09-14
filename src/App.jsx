@@ -6,6 +6,7 @@ import "./App.css";
 
 function App() {
   const [pokemonInfo, setPokemonInfo] = useState({});
+  const [infoIsClicked, setInfoIsClicked] = useState(false);
 
   return (
     <div className="h-screen w-full bg-slate-100 flex flex-col px-4 md:px-40">
@@ -16,8 +17,17 @@ function App() {
             <ListaPokemon
               pokemonInfo={pokemonInfo}
               setPokemonInfo={setPokemonInfo}
+              infoIsClicked={infoIsClicked}
+              setInfoIsClicked={setInfoIsClicked}
             />
           </div>
+        </div>
+        <div className="md:w-1/2">
+          <PokeInfo
+            pokemonInfo={pokemonInfo}
+            infoIsClicked={infoIsClicked}
+            setInfoIsClicked={setInfoIsClicked}
+          />
         </div>
       </div>
     </div>

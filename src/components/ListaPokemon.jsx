@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import ColoresTipo from "../utilities/ColoresTipo";
 import PokeInfo from "./PokeInfo";
 
-const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
+const ListaPokemon = ({
+  pokemonInfo,
+  setPokemonInfo,
+  infoIsClicked,
+  setInfoIsClicked,
+}) => {
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonTypes, setPokemonTypes] = useState({});
   const [limitRender, setLimitRender] = useState(50);
-  const [infoIsClicked, setInfoIsClicked] = useState(false);
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -104,12 +108,7 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
 
   return (
     <div className="h-screen flex flex-row w-full gap-4">
-      <PokeInfo
-        pokemonInfo={pokemonInfo}
-        infoIsClicked={infoIsClicked}
-        setInfoIsClicked={setInfoIsClicked}
-      />
-      <div className="w-full md:w-2/3">
+      <div className="w-full">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-slate-100">
           {pokemonData.map((pokemon, index) => (
             <a
@@ -117,7 +116,7 @@ const ListaPokemon = ({ pokemonInfo, setPokemonInfo }) => {
               className="cursor-pointer"
               onClick={() => mostrarDetalles(pokemon, index)}
             >
-              <div className="bg-white p-4 rounded-xl text-center capitalize">
+              <div className="bg-white p-4 rounded-xl text-center capitalize shadow-sm">
                 <img
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
                     index + 1

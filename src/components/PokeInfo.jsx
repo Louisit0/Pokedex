@@ -33,7 +33,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
     <div
       className={`${
         infoIsClicked
-          ? "fixed bg-slate-50 bottom-0 right-0 left-0 h-full px-4"
+          ? "fixed bg-white bottom-0 right-0 px-4 h-full md:w-1/4 md:mx-4 md:mt-24 md:rounded-t-2xl md:shadow-sm md:mr-40"
           : "hidden"
       }`}
     >
@@ -46,11 +46,11 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
               <img
                 src={pokemonInfo.img}
                 alt={pokemonInfo.name}
-                className="mx-auto object-contain h-40"
+                className="mx-auto object-contain h-40 mt-10 md:mt-0"
                 style={{ imageRendering: "pixelated" }}
               />
               <button
-                className="absolute right-0 p-3 m-3 rounded-full bg-slate-100"
+                className="absolute right-0 p-3 m-3 rounded-full bg-slate-100 md:hidden"
                 onClick={closeInfo}
               >
                 <svg
@@ -101,7 +101,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
               </p>
             </div>
             <div className="mt-4">
-              <h4 className="font-bold">Abilities</h4>
+              <h4 className="font-bold mb-2">Abilities</h4>
               <ul className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
                 {pokemonInfo.abilities.map((abilitie, index) => (
                   <li
@@ -114,7 +114,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
               </ul>
             </div>
             <div className="mt-4">
-              <h4 className="font-bold">Stats</h4>
+              <h4 className="font-bold mb-2">Stats</h4>
               <ul className="flex flex-row justify-evenly">
                 {pokemonInfo.stats.map((stat, statIndex) => (
                   <div key={statIndex} className="bg-gray-100 rounded-2xl p-1">

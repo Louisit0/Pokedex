@@ -33,7 +33,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
     <div
       className={`${
         infoIsClicked
-          ? "fixed bg-white bottom-0 right-0 px-4 h-full md:w-1/4 md:mx-4 md:mt-24 md:rounded-t-2xl md:shadow-sm md:mr-40"
+          ? "fixed bg-white lg:top-10 bottom-0 right-0 px-4 h-full md:w-1/4 md:mx-4 md:mt-24 md:rounded-t-2xl md:shadow-sm md:mr-40"
           : "hidden"
       }`}
     >
@@ -102,10 +102,10 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
             </div>
             <div className="mt-4">
               <h4 className="font-bold mb-2">Abilities</h4>
-              <ul className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
+              <ul className="flex flex-row mx-2 gap-x-4 gap-y-2">
                 {pokemonInfo.abilities.map((abilitie, index) => (
                   <li
-                    className="p-2 rounded-2xl bg-gray-100 capitalize"
+                    className="p-2 rounded-2xl bg-gray-100 capitalize w-full"
                     key={index}
                   >
                     {abilitie.ability.name}
@@ -117,12 +117,15 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
               <h4 className="font-bold mb-2">Stats</h4>
               <ul className="flex flex-row justify-evenly">
                 {pokemonInfo.stats.map((stat, statIndex) => (
-                  <div key={statIndex} className="bg-gray-100 rounded-2xl p-1">
+                  <div
+                    key={statIndex}
+                    className="bg-gray-100 rounded-full p-2 flex flex-col"
+                  >
                     <li
-                      className={`p-2 ${
+                      style={{ fontSize: 10 }}
+                      className={`w-8 h-8 flex items-center justify-center ${
                         colorStats[stat.stat.name]
                       } rounded-full text-white font-bold`}
-                      style={{ fontSize: 12 }}
                     >
                       {statAbbreviations[stat.stat.name]}
                     </li>

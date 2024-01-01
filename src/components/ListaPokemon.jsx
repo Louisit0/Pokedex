@@ -30,7 +30,7 @@ const ListaPokemon = ({
           const response = await fetch(pokemon.url);
           if (response.ok) {
             const pokemonDetails = await response.json();
-            console.log(pokemonDetails);
+            // console.log(pokemonDetails);
 
             // Obtén la URL de la especie
             const speciesUrl = pokemonDetails.species.url;
@@ -47,7 +47,7 @@ const ListaPokemon = ({
 
               if (flavorTextEntry) {
                 const flavorText = flavorTextEntry.flavor_text;
-                console.log(flavorText);
+                // console.log(flavorText);
 
                 // Almacena los detalles del Pokémon en una variable local
                 const pokemonDetail = {
@@ -71,6 +71,7 @@ const ListaPokemon = ({
             }
           }
         });
+        console.log(pokemonData);
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
       }
@@ -146,7 +147,7 @@ const ListaPokemon = ({
         <div className="flex justify-center">
           <button
             onClick={cargarMas}
-            className="py-2 px-8 bg-blue-900 font-bold rounded-2xl text-white my-10 w-1/2"
+            className="py-2 px-8 bg-blue-800 hover:bg-blue-900 font-bold rounded-2xl text-white my-10 w-1/2"
           >
             Cargar más
           </button>

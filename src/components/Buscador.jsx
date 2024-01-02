@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Buscador = () => {
+const Buscador = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChange = (e) => {
+    const newSearchTerm = e.target.value;
+    setSearchTerm(newSearchTerm);
+    onSearch(newSearchTerm);
+  };
+
   return (
     <div className="flex flex-row relative">
       <input
         type="text"
         placeholder="Busca tu pokemon!"
-        className="w-full p-4 bg-zinc-800 shadow-sm rounded-xl"
+        className="w-full p-4 bg-zinc-800 shadow-sm rounded-xl text-white"
+        onChange={handleChange}
+        value={searchTerm}
       />
       <svg
         xmlns="http://www.w3.org/2000/svg"

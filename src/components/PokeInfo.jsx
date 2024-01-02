@@ -24,7 +24,6 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
     console.log("cerrando");
   };
 
-  console.log(pokemonInfo);
   return (
     // <div
     //   className="hidden bg-white rounded-xl shadow-sm md:bottom-0 md:right-36 md:fixed w-96 md:flex justify-center items-start"
@@ -33,11 +32,11 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
     <div
       className={`${
         infoIsClicked
-          ? "fixed bg-zinc-800 lg:top-10 bottom-0 right-0 px-4 h-full md:w-1/4 md:mx-4 md:mt-24 md:rounded-t-2xl md:shadow-sm md:mr-40"
+          ? "fixed bg-zinc-800 lg:top-10 bottom-0 right-0 px-2 h-full md:w-1/4 md:mx-4 md:mt-24 md:rounded-t-2xl md:shadow-sm md:mr-40"
           : "hidden"
       }`}
     >
-      <div className="w-full text-center">
+      <div className="w-full text-center lg:relative">
         {pokemonInfo && pokemonInfo.name ? (
           <>
             {/* Tener 3 tamaños distintos:
@@ -46,7 +45,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
               <img
                 src={pokemonInfo.img}
                 alt={pokemonInfo.name}
-                className="mx-auto object-contain h-40 mt-10 md:mt-0"
+                className="mx-auto object-contain h-40 lg:absolute inset-x-0 lg:top-[-125px]"
                 style={{ imageRendering: "pixelated" }}
               />
               <button
@@ -69,72 +68,83 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
                 </svg>
               </button>
             </div>
-            <p className="text-gray-400 font-bold">N° {pokemonInfo.id}</p>
-            <h3 className="text-2xl font-bold capitalize mb-2 text-zinc-50">
-              {pokemonInfo.name}
-            </h3>
-            <div className="flex flex-row justify-center gap-2">
-              {pokemonInfo.types.map((type, typeIndex) => (
-                <span
-                  key={typeIndex}
-                  className={`px-4 py-1 self-center rounded-lg font-bold capitalize text-sm ${
-                    ColoresTipo[type] || "bg-gray-500"
-                  }`}
-                >
-                  {type}
-                </span>
-              ))}
-            </div>
-            <div className="my-4 text-gray-400">
-              <h4 className="font-bold text-zinc-50">Pokedéx entry</h4>
-              <p>{pokemonInfo.species.flavorText}</p>
-            </div>
-
-            <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
-              <h4 className="font-bold text-zinc-50">Height</h4>
-              <h4 className="font-bold text-zinc-50">Weight</h4>
-              <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50">
-                {pokemonInfo.height}m
-              </p>
-              <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50">
-                {pokemonInfo.weight}kg
-              </p>
-            </div>
-            <div className="mt-4">
-              <h4 className="font-bold mb-2 text-zinc-50">Abilities</h4>
-              <ul className="flex flex-row mx-2 gap-x-4 gap-y-2">
-                {pokemonInfo.abilities.map((abilitie, index) => (
-                  <li
-                    className="p-2 rounded-2xl bg-zinc-500 capitalize w-full text-zinc-50"
-                    key={index}
+            <div className="mt-10">
+              <p className="text-gray-400 font-bold">N° {pokemonInfo.id}</p>
+              <h3 className="text-2xl font-bold capitalize mb-2 text-zinc-50">
+                {pokemonInfo.name}
+              </h3>
+              <div className="flex flex-row justify-center gap-2">
+                {pokemonInfo.types.map((type, typeIndex) => (
+                  <span
+                    key={typeIndex}
+                    className={`px-4 py-1 self-center rounded-lg font-bold capitalize text-sm ${
+                      ColoresTipo[type] || "bg-gray-500"
+                    }`}
                   >
-                    {abilitie.ability.name}
-                  </li>
+                    {type}
+                  </span>
                 ))}
-              </ul>
-            </div>
-            <div className="mt-4">
-              <h4 className="font-bold mb-2 text-zinc-50">Stats</h4>
-              <ul className="flex flex-row justify-evenly">
-                {pokemonInfo.stats.map((stat, statIndex) => (
-                  <div
-                    key={statIndex}
-                    className="bg-zinc-500 rounded-full p-2 flex flex-col"
-                  >
+              </div>
+              <div className="my-4 text-gray-400">
+                <h4 className="font-bold text-zinc-50">Pokedéx entry</h4>
+                <p>{pokemonInfo.species.flavorText}</p>
+              </div>
+
+              <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
+                <h4 className="font-bold text-zinc-50">Height</h4>
+                <h4 className="font-bold text-zinc-50">Weight</h4>
+                <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
+                  {pokemonInfo.height}m
+                </p>
+                <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
+                  {pokemonInfo.weight}kg
+                </p>
+              </div>
+              <div className="mt-4">
+                <h4 className="font-bold mb-2 text-zinc-50">Abilities</h4>
+                <ul className="flex flex-row mx-2 gap-x-4 gap-y-2">
+                  {pokemonInfo.abilities.map((abilitie, index) => (
+                    <li
+                      className="px-1 py-0.5 rounded-2xl bg-zinc-500 capitalize w-full text-zinc-50"
+                      key={index}
+                    >
+                      {abilitie.ability.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-4">
+                <h4 className="font-bold mb-2 text-zinc-50">Stats</h4>
+                <ul className="flex flex-row justify-evenly gap-1">
+                  {pokemonInfo.stats.map((stat, statIndex) => (
+                    <div
+                      key={statIndex}
+                      className="bg-zinc-500 rounded-full p-1 flex flex-col"
+                    >
+                      <li
+                        style={{ fontSize: 10 }}
+                        className={`w-7 h-7 flex items-center justify-center ${
+                          colorStats[stat.stat.name]
+                        } rounded-full text-black font-bold`}
+                      >
+                        {statAbbreviations[stat.stat.name]}
+                      </li>
+                      <li className="font-bold text-sm mt-1 text-zinc-50 mb-1">
+                        {stat.base_stat}
+                      </li>
+                    </div>
+                  ))}
+                  <div className="bg-emerald-700 rounded-full p-1 flex flex-col">
                     <li
                       style={{ fontSize: 10 }}
-                      className={`w-8 h-8 flex items-center justify-center ${
-                        colorStats[stat.stat.name]
-                      } rounded-full text-black font-bold`}
+                      className={`w-7 h-7 flex items-center justify-center rounded-full text-black font-bold bg-emerald-500`}
                     >
-                      {statAbbreviations[stat.stat.name]}
+                      TOT{" "}
                     </li>
-                    <li className="font-bold text-sm mt-1 text-zinc-50">
-                      {stat.base_stat}
-                    </li>
+                    <li className="font-bold text-sm mt-1 text-zinc-50">534</li>
                   </div>
-                ))}
-              </ul>
+                </ul>
+              </div>
             </div>
           </>
         ) : (

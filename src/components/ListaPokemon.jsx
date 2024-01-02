@@ -7,6 +7,7 @@ const ListaPokemon = ({
   setPokemonInfo,
   infoIsClicked,
   setInfoIsClicked,
+  searchTerm,
 }) => {
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonTypes, setPokemonTypes] = useState({});
@@ -22,7 +23,6 @@ const ListaPokemon = ({
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-
         setPokemonData(data.results);
 
         // Para cada Pokémon, obtén sus tipos y almacénalos en el estado
@@ -30,27 +30,18 @@ const ListaPokemon = ({
           const response = await fetch(pokemon.url);
           if (response.ok) {
             const pokemonDetails = await response.json();
-            // console.log(pokemonDetails);
-
-            // Obtén la URL de la especie
             const speciesUrl = pokemonDetails.species.url;
-
-            // Realiza una solicitud para obtener los detalles de la especie
             const speciesResponse = await fetch(speciesUrl);
             if (speciesResponse.ok) {
               const speciesData = await speciesResponse.json();
-
-              // Encuentra la entrada de texto en el idioma "en" (inglés)
               const flavorTextEntry = speciesData.flavor_text_entries.find(
                 (entry) => entry.language.name === "en"
               );
-
               if (flavorTextEntry) {
                 const flavorText = flavorTextEntry.flavor_text;
-                // console.log(flavorText);
 
-                // Almacena los detalles del Pokémon en una variable local
                 const pokemonDetail = {
+                  id: pokemonDetails.id,
                   name: pokemonDetails.name,
                   types: pokemonDetails.types.map((type) => type.type.name),
                   height: pokemonDetails.height,
@@ -63,6 +54,7 @@ const ListaPokemon = ({
                     flavorText: flavorText,
                   },
                 };
+
                 setPokemonTypes((prevTypes) => ({
                   ...prevTypes,
                   [pokemon.name]: pokemonDetail,
@@ -71,7 +63,6 @@ const ListaPokemon = ({
             }
           }
         });
-        console.log(pokemonData);
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
       }
@@ -82,63 +73,62 @@ const ListaPokemon = ({
 
   const mostrarDetalles = (pokemon, index) => {
     setInfoIsClicked(true);
-    console.log("isClicked??: " + infoIsClicked);
 
     // Usa los detalles del Pokémon almacenados en pokemonTypes
     const pokemonDetail = pokemonTypes[pokemon.name] || {};
     setPokemonInfo({
-      id: index + 1,
+      id: pokemonDetail.id,
       name: pokemonDetail.name,
       types: pokemonDetail.types || [],
-      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
-        index + 1
-      }.gif`,
+      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemonDetail.id}.gif`,
       height: pokemonDetail.height || 0,
       weight: pokemonDetail.weight || 0,
       stats: pokemonDetail.stats,
       abilities: pokemonDetail.abilities,
       species: pokemonDetail.species,
     });
-    console.log("pokemonInfo: ", pokemon);
   };
 
   const cargarMas = () => {
     setLimitRender((prevLimit) => prevLimit + 50);
-    console.log("Cargando más: ", limitRender);
   };
+
+  const filteredPokemon = Object.keys(pokemonTypes).filter((pokemonName) =>
+    pokemonName.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="h-screen flex flex-row w-full gap-4">
       <div className="w-full">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {pokemonData.map((pokemon, index) => (
+          {filteredPokemon.map((pokemonName, index) => (
             <a
               key={index}
               className="cursor-pointer"
-              onClick={() => mostrarDetalles(pokemon, index)}
+              onClick={() => mostrarDetalles(pokemonTypes[pokemonName], index)}
             >
               <div className="bg-zinc-800 p-4 rounded-xl text-center capitalize shadow-sm">
                 <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                    index + 1
-                  }.png`}
-                  alt={pokemon.name}
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonTypes[pokemonName].id}.png`}
+                  alt={pokemonName}
+                  loading="lazy"
                   className="mx-auto"
                 />
-                <p className="font-bold text-gray-400">#{index + 1}</p>
-                <h3 className="font-bold mb-2 text-zinc-100">{pokemon.name}</h3>
+                <p className="font-bold text-gray-400">
+                  #{pokemonTypes[pokemonName].id}
+                </p>
+                <h3 className="font-bold mb-2 text-zinc-100">{pokemonName}</h3>
                 <div className="flex flex-row justify-center gap-2">
-                  {pokemonTypes[pokemon.name] &&
-                    pokemonTypes[pokemon.name].types.map((type, typeIndex) => (
-                      <span
-                        key={typeIndex}
-                        className={`px-4 py-1 self-center rounded-lg font-bold text-sm ${
-                          ColoresTipo[type] || "bg-gray-500"
-                        }`}
-                      >
-                        {type}
-                      </span>
-                    ))}
+                  {pokemonTypes[pokemonName].types.map((type, typeIndex) => (
+                    <span
+                      key={typeIndex}
+                      className={`px-4 py-1 self-center rounded-lg font-bold text-sm ${
+                        ColoresTipo[type] || "bg-gray-500"
+                      }`}
+                    >
+                      {type}
+                    </span>
+                  ))}
                 </div>
               </div>
             </a>

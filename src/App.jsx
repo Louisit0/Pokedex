@@ -6,19 +6,25 @@ import "./App.css";
 
 function App() {
   const [pokemonInfo, setPokemonInfo] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
   const [infoIsClicked, setInfoIsClicked] = useState(false);
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
 
   return (
     <div className="h-screen w-full flex flex-col px-4 md:px-40">
       <div className="flex flex-row mt-8">
         <div className="w-full">
-          <Buscador />
+          <Buscador onSearch={handleSearch} />
           <div className="mt-16">
             <ListaPokemon
               pokemonInfo={pokemonInfo}
               setPokemonInfo={setPokemonInfo}
               infoIsClicked={infoIsClicked}
               setInfoIsClicked={setInfoIsClicked}
+              searchTerm={searchTerm}
             />
           </div>
         </div>

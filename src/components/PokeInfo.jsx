@@ -94,10 +94,10 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
                 <h4 className="font-bold text-zinc-50">Height</h4>
                 <h4 className="font-bold text-zinc-50">Weight</h4>
                 <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
-                  {pokemonInfo.height}m
+                  {pokemonInfo.height / 10} m
                 </p>
                 <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
-                  {pokemonInfo.weight}kg
+                  {pokemonInfo.weight / 10} kg
                 </p>
               </div>
               <div className="mt-4">

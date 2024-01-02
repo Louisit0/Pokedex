@@ -110,14 +110,14 @@ const ListaPokemon = ({
   return (
     <div className="h-screen flex flex-row w-full gap-4">
       <div className="w-full">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-slate-100">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {pokemonData.map((pokemon, index) => (
             <a
               key={index}
               className="cursor-pointer"
               onClick={() => mostrarDetalles(pokemon, index)}
             >
-              <div className="bg-white p-4 rounded-xl text-center capitalize shadow-sm">
+              <div className="bg-zinc-800 p-4 rounded-xl text-center capitalize shadow-sm">
                 <img
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
                     index + 1
@@ -126,7 +126,7 @@ const ListaPokemon = ({
                   className="mx-auto"
                 />
                 <p className="font-bold text-gray-400">#{index + 1}</p>
-                <h3 className="font-bold mb-2">{pokemon.name}</h3>
+                <h3 className="font-bold mb-2 text-zinc-100">{pokemon.name}</h3>
                 <div className="flex flex-row justify-center gap-2">
                   {pokemonTypes[pokemon.name] &&
                     pokemonTypes[pokemon.name].types.map((type, typeIndex) => (

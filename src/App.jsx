@@ -9,7 +9,7 @@ function App() {
   const [infoIsClicked, setInfoIsClicked] = useState(false);
 
   return (
-    <div className="h-screen w-full bg-slate-100 flex flex-col px-4 md:px-40">
+    <div className="h-screen w-full flex flex-col px-4 md:px-40">
       <div className="flex flex-row mt-8">
         <div className="w-full">
           <Buscador />

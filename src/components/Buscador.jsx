@@ -6,7 +6,7 @@ const Buscador = () => {
       <input
         type="text"
         placeholder="Busca tu pokemon!"
-        className="w-full p-4 bg-white shadow-sm rounded-xl"
+        className="w-full p-4 bg-zinc-800 shadow-sm rounded-xl"
       />
       <svg
         xmlns="http://www.w3.org/2000/svg"

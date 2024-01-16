@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ColoresTipo from "../utilities/ColoresTipo";
 import PokeInfo from "./PokeInfo";
 
@@ -12,10 +12,13 @@ const ListaPokemon = ({
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonTypes, setPokemonTypes] = useState({});
   const [limitRender, setLimitRender] = useState(50);
+  const [loading, setLoading] = useState(true);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `https://pokeapi.co/api/v2/pokemon?offset=0&limit=${limitRender}`
         );
@@ -65,6 +68,8 @@ const ListaPokemon = ({
         });
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -93,12 +98,39 @@ const ListaPokemon = ({
     setLimitRender((prevLimit) => prevLimit + 50);
   };
 
+  const handleScroll = () => {
+    if (
+      containerRef.current &&
+      containerRef.current.scrollTop + containerRef.current.clientHeight >=
+        containerRef.current.scrollHeight &&
+      !loading
+    ) {
+      cargarMas();
+    }
+  };
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [containerRef, handleScroll]);
+
+  // Filtra la lista completa de Pokémon en función de la búsqueda
   const filteredPokemon = Object.keys(pokemonTypes).filter((pokemonName) =>
-    pokemonName.toLowerCase().startsWith(searchTerm.toLowerCase())
+    pokemonName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="h-screen flex flex-row w-full gap-4">
+    <div
+      ref={containerRef}
+      className="h-screen flex flex-row w-full gap-4 overflow-y-auto"
+    >
       <div className="w-full">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {filteredPokemon.map((pokemonName, index) => (
@@ -134,16 +166,8 @@ const ListaPokemon = ({
             </a>
           ))}
         </div>
-        <div className="flex justify-center">
-          <button
-            onClick={cargarMas}
-            className="py-2 px-8 bg-blue-800 hover:bg-blue-900 font-bold rounded-2xl text-white my-10 w-1/2"
-          >
-            Cargar más
-          </button>
-        </div>
+        {loading && <div>Loading...</div>}
       </div>
-      {/* Futuro: que cargue a medida que scrolleas */}
     </div>
   );
 };

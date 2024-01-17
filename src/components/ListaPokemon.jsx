@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import ColoresTipo from "../utilities/ColoresTipo";
+import InfiniteScroll from "react-infinite-scroll-component";
 import PokeInfo from "./PokeInfo";
 
 const ListaPokemon = ({
@@ -98,29 +99,6 @@ const ListaPokemon = ({
     setLimitRender((prevLimit) => prevLimit + 50);
   };
 
-  const handleScroll = () => {
-    if (
-      containerRef.current &&
-      containerRef.current.scrollTop + containerRef.current.clientHeight >=
-        containerRef.current.scrollHeight &&
-      !loading
-    ) {
-      cargarMas();
-    }
-  };
-
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        containerRef.current.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, [containerRef, handleScroll]);
-
   // Filtra la lista completa de Pokémon en función de la búsqueda
   const filteredPokemon = Object.keys(pokemonTypes).filter((pokemonName) =>
     pokemonName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -129,43 +107,62 @@ const ListaPokemon = ({
   return (
     <div
       ref={containerRef}
-      className="h-screen flex flex-row w-full gap-4 overflow-y-auto"
+      className={`flex flex-row w-full gap-4 px-4 lg:px-20 ${
+        infoIsClicked ? "pointer-events-none opacity-5 select-none" : ""
+      }`}
     >
       <div className="w-full">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {filteredPokemon.map((pokemonName, index) => (
-            <a
-              key={index}
-              className="cursor-pointer"
-              onClick={() => mostrarDetalles(pokemonTypes[pokemonName], index)}
-            >
-              <div className="bg-zinc-800 p-4 rounded-xl text-center capitalize shadow-sm">
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonTypes[pokemonName].id}.png`}
-                  alt={pokemonName}
-                  loading="lazy"
-                  className="mx-auto"
-                />
-                <p className="font-bold text-gray-400">
-                  #{pokemonTypes[pokemonName].id}
-                </p>
-                <h3 className="font-bold mb-2 text-zinc-100">{pokemonName}</h3>
-                <div className="flex flex-row justify-center gap-2">
-                  {pokemonTypes[pokemonName].types.map((type, typeIndex) => (
-                    <span
-                      key={typeIndex}
-                      className={`px-4 py-1 self-center rounded-lg font-bold text-sm ${
-                        ColoresTipo[type] || "bg-gray-500"
-                      }`}
-                    >
-                      {type}
-                    </span>
-                  ))}
+        <InfiniteScroll
+          dataLength={pokemonData.length}
+          next={() => setLimitRender((prevLimit) => prevLimit + 50)}
+          hasMore={true}
+          loader={<div>Loading...</div>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Ya no hay más pokemones :c</b>
+            </p>
+          }
+        >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {filteredPokemon.map((pokemonName, index) => (
+              <a
+                key={index}
+                className="cursor-pointer"
+                onClick={() =>
+                  mostrarDetalles(pokemonTypes[pokemonName], index)
+                }
+              >
+                <div className="bg-zinc-800 p-4 rounded-xl text-center capitalize shadow-sm">
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonTypes[pokemonName].id}.png`}
+                    alt={pokemonName}
+                    loading="lazy"
+                    className="mx-auto"
+                  />
+                  <p className="font-bold text-gray-400">
+                    #{pokemonTypes[pokemonName].id}
+                  </p>
+                  <h3 className="font-bold mb-2 text-zinc-100">
+                    {pokemonName}
+                  </h3>
+                  <div className="flex flex-row justify-center gap-2">
+                    {pokemonTypes[pokemonName].types.map((type, typeIndex) => (
+                      <span
+                        key={typeIndex}
+                        className={`px-4 py-1 self-center rounded-lg font-bold text-sm ${
+                          ColoresTipo[type] || "bg-gray-500"
+                        }`}
+                      >
+                        {type}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </a>
-          ))}
-        </div>
+              </a>
+            ))}
+          </div>
+        </InfiniteScroll>
+
         {loading && <div>Loading...</div>}
       </div>
     </div>

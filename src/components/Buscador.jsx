@@ -10,28 +10,14 @@ const Buscador = ({ onSearch }) => {
   };
 
   return (
-    <div className="flex flex-row relative">
+    <div className="flex flex-row justify-center fixed w-full z-50">
       <input
         type="text"
-        placeholder="Busca tu pokemon!"
-        className="w-full p-4 bg-zinc-800 shadow-sm rounded-xl text-white"
+        placeholder="Busca un pokemon 🔍"
+        className="w-[413px] flex border text-white border-zinc-700 rounded-3xl mx-4 lg:mx-0 px-4 py-2 backdrop-filter backdrop-blur-md bg-opacity-60 bg-zinc-800 text-sm md:text-base"
         onChange={handleChange}
         value={searchTerm}
       />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="w-6 h-6 absolute right-2 top-4"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-        />
-      </svg>
     </div>
   );
 };

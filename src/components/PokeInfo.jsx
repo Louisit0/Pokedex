@@ -25,14 +25,10 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
   };
 
   return (
-    // <div
-    //   className="hidden bg-white rounded-xl shadow-sm md:bottom-0 md:right-36 md:fixed w-96 md:flex justify-center items-start"
-    //   style={{ height: "86vh" }}
-    // >
     <div
       className={`${
         infoIsClicked
-          ? "fixed bg-zinc-800 lg:top-10 bottom-0 right-0 px-2 h-full md:w-1/4 md:mx-4 md:mt-24 md:rounded-t-2xl md:shadow-sm md:mr-40"
+          ? "fixed inset-0 bg-zinc-900 border border-zinc-800 lg:rounded-3xl z-50 flex items-center justify-center lg:w-[1000px] lg:h-[600px] m-auto"
           : "hidden"
       }`}
     >
@@ -68,6 +64,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
                 </svg>
               </button>
             </div>
+
             <div className="mt-10">
               <p className="text-gray-400 font-bold">N° {pokemonInfo.id}</p>
               <h3 className="text-2xl font-bold capitalize mb-2 text-zinc-50">
@@ -89,7 +86,6 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
                 <h4 className="font-bold text-zinc-50">Pokedéx entry</h4>
                 <p>{pokemonInfo.species.flavorText}</p>
               </div>
-
               <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
                 <h4 className="font-bold text-zinc-50">Height</h4>
                 <h4 className="font-bold text-zinc-50">Weight</h4>
@@ -144,6 +140,12 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
                     <li className="font-bold text-sm mt-1 text-zinc-50">534</li>
                   </div>
                 </ul>
+                <button
+                  onClick={() => setInfoIsClicked(false)}
+                  className="mt-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md"
+                >
+                  Cerrar
+                </button>
               </div>
             </div>
           </>

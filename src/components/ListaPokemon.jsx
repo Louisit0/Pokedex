@@ -12,7 +12,7 @@ const ListaPokemon = ({
 }) => {
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonTypes, setPokemonTypes] = useState({});
-  const [loadedPokemonCount, setLoadedPokemonCount] = useState(50);
+  const [limitRender, setLimitRender] = useState(50);
   const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
 
@@ -21,14 +21,13 @@ const ListaPokemon = ({
       try {
         setLoading(true);
         const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1008`
+          `https://pokeapi.co/api/v2/pokemon?offset=0&limit=${limitRender}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setPokemonData(data.results);
-        console.log(pokemonData);
 
         // Para cada Pokémon, obtén sus tipos y almacénalos en el estado
         data.results.forEach(async (pokemon) => {
@@ -76,7 +75,7 @@ const ListaPokemon = ({
     };
 
     fetchPokemonData();
-  }, []);
+  }, [limitRender]);
 
   const mostrarDetalles = (pokemon, index) => {
     setInfoIsClicked(true);
@@ -97,7 +96,7 @@ const ListaPokemon = ({
   };
 
   const cargarMas = () => {
-    setLoadedPokemonCount((prevCount) => prevCount + 50);
+    setLimitRender((prevLimit) => prevLimit + 50);
   };
 
   // Filtra la lista completa de Pokémon en función de la búsqueda
@@ -114,7 +113,7 @@ const ListaPokemon = ({
     >
       <div className="w-full">
         <InfiniteScroll
-          dataLength={loadedPokemonCount}
+          dataLength={pokemonData.length}
           next={cargarMas}
           hasMore={true}
           loader={<div>Loading...</div>}
@@ -125,46 +124,42 @@ const ListaPokemon = ({
           }
         >
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {filteredPokemon
-              .slice(0, loadedPokemonCount)
-              .map((pokemonName, index) => (
-                <a
-                  key={index}
-                  className="cursor-pointer"
-                  onClick={() =>
-                    mostrarDetalles(pokemonTypes[pokemonName], index)
-                  }
-                >
-                  <div className="bg-zinc-800 p-4 rounded-xl text-center capitalize shadow-sm">
-                    <img
-                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonTypes[pokemonName].id}.png`}
-                      alt={pokemonName}
-                      loading="lazy"
-                      className="mx-auto"
-                    />
-                    <p className="font-bold text-gray-400">
-                      #{pokemonTypes[pokemonName].id}
-                    </p>
-                    <h3 className="font-bold mb-2 text-zinc-100">
-                      {pokemonName}
-                    </h3>
-                    <div className="flex flex-row justify-center gap-2">
-                      {pokemonTypes[pokemonName].types.map(
-                        (type, typeIndex) => (
-                          <span
-                            key={typeIndex}
-                            className={`px-4 py-1 self-center rounded-lg font-bold text-sm ${
-                              ColoresTipo[type] || "bg-gray-500"
-                            }`}
-                          >
-                            {type}
-                          </span>
-                        )
-                      )}
-                    </div>
+            {filteredPokemon.map((pokemonName, index) => (
+              <a
+                key={index}
+                className="cursor-pointer"
+                onClick={() =>
+                  mostrarDetalles(pokemonTypes[pokemonName], index)
+                }
+              >
+                <div className="bg-zinc-800 p-4 rounded-xl text-center capitalize shadow-sm">
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonTypes[pokemonName].id}.png`}
+                    alt={pokemonName}
+                    loading="lazy"
+                    className="mx-auto"
+                  />
+                  <p className="font-bold text-gray-400">
+                    #{pokemonTypes[pokemonName].id}
+                  </p>
+                  <h3 className="font-bold mb-2 text-zinc-100">
+                    {pokemonName}
+                  </h3>
+                  <div className="flex flex-row justify-center gap-2">
+                    {pokemonTypes[pokemonName].types.map((type, typeIndex) => (
+                      <span
+                        key={typeIndex}
+                        className={`px-4 py-1 self-center rounded-lg font-bold text-sm ${
+                          ColoresTipo[type] || "bg-gray-500"
+                        }`}
+                      >
+                        {type}
+                      </span>
+                    ))}
                   </div>
-                </a>
-              ))}
+                </div>
+              </a>
+            ))}
           </div>
         </InfiniteScroll>
 

@@ -32,7 +32,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
           : "hidden"
       }`}
     >
-      <div className="w-full text-center lg:relative">
+      <div className="w-full h-full text-center lg:relative">
         {pokemonInfo && pokemonInfo.name ? (
           <>
             {/* Tener 3 tamaños distintos:
@@ -65,7 +65,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
               </button>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-10 mx-4">
               <p className="text-gray-400 font-bold">N° {pokemonInfo.id}</p>
               <h3 className="text-2xl font-bold capitalize mb-2 text-zinc-50">
                 {pokemonInfo.name}
@@ -83,7 +83,7 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
                 ))}
               </div>
               <div className="my-4 text-gray-400">
-                <h4 className="font-bold text-zinc-50">Pokedéx entry</h4>
+                <h4 className="font-bold text-zinc-50">Descripcion</h4>
                 <p>{pokemonInfo.species.flavorText}</p>
               </div>
               <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">

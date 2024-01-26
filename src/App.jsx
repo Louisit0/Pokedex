@@ -17,7 +17,7 @@ function App() {
     <div className="h-screen w-full flex flex-col">
       <div className="flex flex-row mt-8">
         <div className="w-full">
-          <Buscador onSearch={handleSearch} />
+          {/* <Buscador onSearch={handleSearch} /> */}
           <div className="mt-16">
             <ListaPokemon
               pokemonInfo={pokemonInfo}

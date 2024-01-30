@@ -86,66 +86,73 @@ const PokeInfo = ({ pokemonInfo, infoIsClicked, setInfoIsClicked }) => {
                 <h4 className="font-bold text-zinc-50">Descripcion</h4>
                 <p>{pokemonInfo.species.flavorText}</p>
               </div>
-              <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
-                <h4 className="font-bold text-zinc-50">Height</h4>
-                <h4 className="font-bold text-zinc-50">Weight</h4>
-                <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
-                  {pokemonInfo.height / 10} m
-                </p>
-                <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
-                  {pokemonInfo.weight / 10} kg
-                </p>
-              </div>
-              <div className="mt-4">
-                <h4 className="font-bold mb-2 text-zinc-50">Abilities</h4>
-                <ul className="flex flex-row mx-2 gap-x-4 gap-y-2">
-                  {pokemonInfo.abilities.map((abilitie, index) => (
-                    <li
-                      className="px-1 py-0.5 rounded-2xl bg-zinc-500 capitalize w-full text-zinc-50"
-                      key={index}
-                    >
-                      {abilitie.ability.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-4">
-                <h4 className="font-bold mb-2 text-zinc-50">Stats</h4>
-                <ul className="flex flex-row justify-evenly gap-1">
-                  {pokemonInfo.stats.map((stat, statIndex) => (
-                    <div
-                      key={statIndex}
-                      className="bg-zinc-500 rounded-full p-1 flex flex-col"
-                    >
-                      <li
-                        style={{ fontSize: 10 }}
-                        className={`w-7 h-7 flex items-center justify-center ${
-                          colorStats[stat.stat.name]
-                        } rounded-full text-black font-bold`}
-                      >
-                        {statAbbreviations[stat.stat.name]}
-                      </li>
-                      <li className="font-bold text-sm mt-1 text-zinc-50 mb-1">
-                        {stat.base_stat}
-                      </li>
-                    </div>
-                  ))}
-                  <div className="bg-emerald-700 rounded-full p-1 flex flex-col">
-                    <li
-                      style={{ fontSize: 10 }}
-                      className={`w-7 h-7 flex items-center justify-center rounded-full text-black font-bold bg-emerald-500`}
-                    >
-                      TOT{" "}
-                    </li>
-                    <li className="font-bold text-sm mt-1 text-zinc-50">534</li>
+              <div className="flex flex-row">
+                <div className="w-1/2">
+                  <div className="grid grid-cols-2 mx-2 gap-x-4 gap-y-2">
+                    <h4 className="font-bold text-zinc-50">Height</h4>
+                    <h4 className="font-bold text-zinc-50">Weight</h4>
+                    <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
+                      {pokemonInfo.height / 10} m
+                    </p>
+                    <p className="p-2 rounded-2xl bg-zinc-500 text-zinc-50 px-1 py-0.5">
+                      {pokemonInfo.weight / 10} kg
+                    </p>
                   </div>
-                </ul>
-                <button
-                  onClick={() => setInfoIsClicked(false)}
-                  className="mt-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md"
-                >
-                  Cerrar
-                </button>
+                  <div className="mt-4">
+                    <h4 className="font-bold mb-2 text-zinc-50">Abilities</h4>
+                    <ul className="flex flex-row mx-2 gap-x-4 gap-y-2">
+                      {pokemonInfo.abilities.map((abilitie, index) => (
+                        <li
+                          className="px-1 py-0.5 rounded-2xl bg-zinc-500 capitalize w-full text-zinc-50"
+                          key={index}
+                        >
+                          {abilitie.ability.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-4">
+                    <h4 className="font-bold mb-2 text-zinc-50">Stats</h4>
+                    <ul className="flex flex-row justify-evenly gap-1">
+                      {pokemonInfo.stats.map((stat, statIndex) => (
+                        <div
+                          key={statIndex}
+                          className="bg-zinc-500 rounded-full p-1 flex flex-col"
+                        >
+                          <li
+                            style={{ fontSize: 10 }}
+                            className={`w-7 h-7 flex items-center justify-center ${
+                              colorStats[stat.stat.name]
+                            } rounded-full text-black font-bold`}
+                          >
+                            {statAbbreviations[stat.stat.name]}
+                          </li>
+                          <li className="font-bold text-sm mt-1 text-zinc-50 mb-1">
+                            {stat.base_stat}
+                          </li>
+                        </div>
+                      ))}
+                      <div className="bg-emerald-700 rounded-full p-1 flex flex-col">
+                        <li
+                          style={{ fontSize: 10 }}
+                          className={`w-7 h-7 flex items-center justify-center rounded-full text-black font-bold bg-emerald-500`}
+                        >
+                          TOT{" "}
+                        </li>
+                        <li className="font-bold text-sm mt-1 text-zinc-50">
+                          534
+                        </li>
+                      </div>
+                    </ul>
+                    <button
+                      onClick={() => setInfoIsClicked(false)}
+                      className="mt-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md"
+                    >
+                      Cerrar
+                    </button>
+                  </div>
+                </div>
+                <div className="w-1/2 text-white">Evoluciones</div>
               </div>
             </div>
           </>

@@ -167,8 +167,6 @@ const ListaPokemon = ({
               ))}
           </div>
         </InfiniteScroll>
-
-        {loading && <div>Loading...</div>}
       </div>
     </div>
   );
